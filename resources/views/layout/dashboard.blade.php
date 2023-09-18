@@ -181,13 +181,8 @@
             </ul>
 
             </div>
-
-
-
-
-
-
-@yield('content')
+            {{ $slot }}
+            {{-- @yield('content') --}}
 </div>
 </div>
 

@@ -1,6 +1,17 @@
-@extends('layout.dashboard')
-@section('content')
+{{-- @extends('layout.dashboard')
+@section('content') --}}
+<x-dashboard-layout>
+<x-alert / >
     <div class="container" style="margin-right: 330px; margin-top: -151px;" >
+        @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('message') }}</strong>
+            <button type="button" class="btn-close text-end"
+                style="justify-content: space-between; right: 95%;
+        top: -4px;"
+                data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
         <div class="">
             <div>
                 <div class="form-group pb-2">
@@ -90,4 +101,6 @@
         </div>
     </div>
     </div>
-@endsection
+{{-- @endsection --}}
+</x-dashboard-layout>
+

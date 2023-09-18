@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
@@ -20,9 +22,7 @@ class CategoriesController extends Controller
             $query->where('name','LIKE','%value%')->orwhere('description','LIKE','%value%');
 
         })->when($request->parent_id,function($query,$value){
-            $query->where('parent_id','=',$value);
-
-        })->get();
+        $query->where('parent_id','=',$value);})->get();
         $parents = Categories::orderBy('name','asc')->get();
 
         return view('admin.categories.index',['categories'=>$categories,'parents'=>$parents]);
@@ -48,13 +48,18 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-        $validator = Validator($request->all(), [
+        $request->validate([
             'name' => 'required|max:50',
-            'description' => 'required|max:50',
-            // "status" => "required|boolean",
+            'description' => 'nullable|max:50',
+            'parent_id' => ['nullable','exists:categories,id'],
+            'image' => "nullable|image|mimes:jpeg,jpg,png|max:1024",
+            "status" => "required|in:active,inactive",
 
+        ],[
+            'name.required' => 'أدخل الاسم ',
+            'status.required' => 'أدخل الحالة ',
         ]);
-        if (!$validator->fails()) {
+        // if (!$validator->fails()) {
             $category = new Categories();
             $category->name = $request->input('name');
             $category->slug =Str::slug($request->input('name'));
@@ -67,9 +72,11 @@ class CategoriesController extends Controller
                 $filename = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $filename);
                 $category->img = $filename;
-            }
+            // }
             $saved = $category->save();
-            return redirect()->back();
+            // return redirect()->back();
+            Session::flash('message', 'تم اضافة التصنيف بنجاح ..');
+            return redirect()->route('category.index');
 
             // return response()->json([
 
@@ -77,13 +84,14 @@ class CategoriesController extends Controller
             // ]
             //     , $saved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST
             // );
-        } else {
-            return response()->json([
-                'message' => $validator->getMessageBag()->first(),
-            ], Response::HTTP_BAD_REQUEST
-            );
-
         }
+        // else {
+        //     return response()->json([
+        //         'message' => $validator->getMessageBag()->first(),
+        //     ], Response::HTTP_BAD_REQUEST
+        //     );
+
+        // }
     }
 
     /**

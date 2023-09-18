@@ -1,10 +1,23 @@
-@extends('layout.dashboard')
-@section('content')
+{{-- @extends('layout.dashboard')
+@section('content') --}}
+<x-dashboard-layout>
 <div class="col-md-8 py-4" style="margin-right:50px">
     <h3 class="pb-4">إضافه تصنيف</h3>
     {{-- <h3 class="pb-4">{{$title}}</h3> --}}
     <form action="{{route('category.store')}}" class="row" method="POST">
         @csrf
+        @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+            <h5><i class="icon fas fa-ban"></i> Errors!</h5>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
         <div class="form-floating mb-3 p-2 col-md-6">
             <input
                 type="text"
@@ -81,4 +94,5 @@
         </div>
     </form>
 </div>
-@endsection
+</x-dashboard-layout>
+{{-- @endsection --}}
