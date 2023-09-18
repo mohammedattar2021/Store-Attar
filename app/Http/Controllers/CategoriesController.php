@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -45,20 +46,21 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
-        $request->validate([
-            'name' => 'required|max:50',
-            'description' => 'nullable|max:50',
-            'parent_id' => ['nullable','exists:categories,id'],
-            'image' => "nullable|image|mimes:jpeg,jpg,png|max:1024",
-            "status" => "required|in:active,inactive",
+        //Request تحويل الي طريقة
+        /*******----------------- ******/
+        // $request->validate([
+        //     'name' => 'required|max:50',
+        //     'description' => 'nullable|max:50',
+        //     'parent_id' => ['nullable','exists:categories,id'],
+        //     'image' => "nullable|image|mimes:jpeg,jpg,png|max:1024",
+        //     "status" => "required|in:active,inactive",
 
-        ],[
-            'name.required' => 'أدخل الاسم ',
-            'status.required' => 'أدخل الحالة ',
-        ]);
+        // ],[
+        //     'name.required' => 'أدخل الاسم ',
+        //     'status.required' => 'أدخل الحالة ',
+        // ]);
         // if (!$validator->fails()) {
             $category = new Categories();
             $category->name = $request->input('name');
