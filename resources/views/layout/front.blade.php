@@ -157,47 +157,7 @@
         </div>
     </nav>
 </div>
-<div class="container" style="margin-right:15px ">
-    <h4>مرحبا/ </h4>
-    <div class="row my-3">
-        <div class="col-md-3 bg-dark rounded-3 text-white py-4">
-            <ul class="nav flex-column h-100" style="height: 30em">
-                <div>
-                    <div class="app-sidebar__overlay" data-bs-toggle="sidebar">
-                        <h5>التصنيفات</h5>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('category.create')}}"
-                            >اضافه تصنيف</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('category.index')}}"
-                            >عرض تصنيف</a
-                        >
-                    </li>
-
-                </div>
-                <br>
-                <div class="app-sidebar__overlay" data-bs-toggle="sidebar">
-                    <h5>المنتجات</h5>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('product.create')}}"
-                        >اضافه منتج</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{route('product.index')}}"
-                        >عرض منتج</a
-                    >
-                </li>
-            </div>
-            </ul>
-
-            </div>
-            {{ $slot }}
-            {{-- @yield('content') --}}
-</div>
-</div>
+{{ $slot }}
 
     <!-- ====== start footer ====== -->
     <footer class="style-6 border-top brd-gray">
