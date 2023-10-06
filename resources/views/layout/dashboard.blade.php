@@ -125,14 +125,14 @@
                 <div class="nav-side">
                     <div class="d-flex align-items-center">
                         <a
-                            to="/login"
+                            href="{{route('login')}}"
                             class="search-icon me-4 hover-blue4 btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
                             v-if="this.isLoggedIn"
                         >
                             <i class="bi bi-person"></i>
                         </a>
                         <a
-                            to="/register"
+                            href="{{route('register')}}"
                             class="btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
                             v-if="this.isLoggedIn"
                         >
@@ -142,15 +142,16 @@
                             </span>
                         </a>
                         <a
-                            to=""
+                            href="#"
                             class="btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
-                            v-if="!this.isLoggedIn"
+                        onclick="document.getElementById('logout').submit()"
                         >
                             <span
                                 >تسجيل الخروج
                                 <i class="bi bi-arrow-right ms-1"></i>
                             </span>
                         </a>
+                        <form action="{{route('logout')}}" id="logout" method="post">@csrf</form>
                     </div>
                 </div>
             </div>
@@ -158,7 +159,12 @@
     </nav>
 </div>
 <div class="container" style="margin-right:15px ">
-    <h4>مرحبا/ </h4>
+            {{-- @if (Auth::check()) --}}
+            {{-- @endif --}}
+
+            @auth('web')
+            <h4>مرحبا/{{Auth::guard('web')->user()->name}} </h4>
+            @endauth
     <div class="row my-3">
         <div class="col-md-3 bg-dark rounded-3 text-white py-4">
             <ul class="nav flex-column h-100" style="height: 30em">

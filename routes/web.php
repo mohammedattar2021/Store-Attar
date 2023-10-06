@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\Stores\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/Home', function () {
     return view('welcome');
 });
@@ -29,7 +31,7 @@ Route::get('/dashboard', function () {
     return view('layout.dashboard');
 });
 // Route::get('add/category',[CategoriesController::class,'create']);
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth','verified')->group(function () {
     Route::resource('/category', CategoriesController::class);
     Route::get('index',[CategoriesController::class,'index']);
     Route::get('/categories', function () {
@@ -41,5 +43,25 @@ Route::prefix('admin')->group(function () {
 
 
 });
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/tt', function () {
+    return view('admin.categories.login');
+});
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth:web,store', 'verified'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+// Route::get('/stores/login', [LoginController::class, 'create'])->middleware('guest:store')
+// ->name('stores.login');
+
+// Route::post('/stores/login', [LoginController::class, 'store'])->middleware('guest:store');
+
+require __DIR__.'/auth.php';

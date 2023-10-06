@@ -113,7 +113,7 @@
                             <i class="bi bi-person"></i>
                         </a>
                         <a
-                            to="/register"
+                        href="{{route('login',session('guard','web'))}}"
                             class="btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
                             v-if="this.isLoggedIn"
                         >
@@ -123,8 +123,8 @@
                             </span>
                         </a>
                         <a
-                            to=""
-                            class="btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
+                        href="{{route('register')}}"
+                        class="btn rounded-pill brd-gray hover-blue4 sm-butn fw-bold"
                             v-if="!this.isLoggedIn"
                         >
                             <span

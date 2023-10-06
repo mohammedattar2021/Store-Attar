@@ -17,6 +17,10 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    // 'defaults' => [
+    //     'guard' => 'store',
+    //     'passwords' => 'stores',
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,6 +43,10 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'store' => [
+            'driver' => 'session',
+            'provider' => 'stores',
         ],
     ],
 
@@ -63,6 +71,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'stores' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Stores::class,
         ],
 
         // 'users' => [
@@ -93,6 +105,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'stores' => [
+            'provider' => 'stores',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
